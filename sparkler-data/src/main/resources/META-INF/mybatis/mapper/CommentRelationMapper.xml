@@ -1,0 +1,43 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhenhui.sparkler.data.model.mapper.CommentRelationMapper">
+
+    <resultMap id="commentRelationMap" type="CommentRelation">
+        <result property="id" column="id"/>
+        <result property="refId" column="ref_id"/>
+        <result property="commentId" column="comment_id"/>
+        <result property="number" column="number"/>
+    </resultMap>
+
+    <insert id="insertOrIgnore" parameterType="CommentStats" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into comment_relations (
+          `ref_id`,
+          `comment_id`,
+          `number`
+        ) values (
+          #{refId},
+          #{commentId},
+          #{number}
+        );
+    </insert>
+
+    <select id="selectByRefId" resultMap="commentRelationMap">
+
+
+        select * from comment_relations where ref_id = #{refId}
+        <choose>
+            <when test="sortAsc">
+                and number &gt; #{startNo} order by number
+            </when>
+            <otherwise>
+                and number &lt; #{startNo} order by number desc
+            </otherwise>
+        </choose>
+        limit #{count}
+
+
+    </select>
+
+</mapper>

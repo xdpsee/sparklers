@@ -1,0 +1,33 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhenhui.sparkler.data.model.mapper.ReplyStatsMapper">
+
+    <resultMap id="replyStatsMap" type="ReplyStats">
+        <result property="postId" column="post_id"/>
+        <result property="count" column="count"/>
+        <result property="version" column="version"/>
+    </resultMap>
+
+    <insert id="insertOrIgnore" parameterType="ReplyStats">
+        insert ignore into reply_stats (
+          `post_id`,
+          `count`,
+          `version`
+        ) values (
+          #{postId},
+          #{count},
+          #{version}
+        );
+    </insert>
+
+    <select id="selectForUpdate" resultMap="replyStatsMap">
+        select * from reply_stats where post_id = #{postId} for update
+    </select>
+
+    <update id="updateCount">
+        update reply_stats set `count` = `count` + 1, version = version + 1 where post_id = #{postId} and version = #{version}
+    </update>
+
+</mapper>

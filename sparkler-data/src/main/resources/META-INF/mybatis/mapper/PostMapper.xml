@@ -1,0 +1,55 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhenhui.sparkler.data.model.mapper.PostMapper">
+
+    <resultMap id="postMap" type="Post">
+        <result property="id" column="id"/>
+        <result property="type" column="type"
+                typeHandler="com.zhenhui.sparkler.data.model.type.handler.TypeConverter"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="content" column="content"
+                typeHandler="com.zhenhui.sparkler.data.model.type.handler.ContentConverter"/>
+        <result property="createAt" column="create_at"/>
+        <result property="updateAt" column="update_at"/>
+        <result property="creatorId" column="creator_id"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="Post" useGeneratedKeys="true" keyProperty="id">
+        insert into posts (
+          `type`,
+          `title`,
+          `description`,
+          `content`,
+          `create_at`,
+          `update_at`,
+          `creator_id`,
+          `status`
+        ) values (
+          #{type},
+          #{title},
+          #{description},
+          #{content},
+          #{createAt},
+          #{updateAt},
+          #{creatorId},
+          #{status}
+        );
+    </insert>
+
+    <select id="selectById" resultMap="postMap">
+        select * from posts where id = #{id}
+    </select>
+
+    <select id="selectByIds" resultMap="postMap">
+        select * from posts where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+
+</mapper>

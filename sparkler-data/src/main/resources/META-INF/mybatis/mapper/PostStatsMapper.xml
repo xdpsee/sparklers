@@ -1,0 +1,52 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhenhui.sparkler.data.model.mapper.PostStatsMapper">
+
+    <resultMap id="postStatsMap" type="PostStats">
+        <result property="category" column="category"/>
+        <result property="section" column="section"/>
+        <result property="number" column="number"/>
+        <result property="postId" column="post_id"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="PostStats">
+        insert into post_stats (
+          `category`,
+          `section`,
+          `number`,
+          `post_id`
+        ) values (
+          #{category},
+          #{section},
+          #{number},
+          #{postId}
+        );
+    </insert>
+
+    <select id="selectByCategory" resultMap="postStatsMap">
+        <![CDATA[
+
+        select * from post_stats
+        where category = #{category} and `number` < #{startNo}
+        order by `number` desc
+        limit #{count}
+
+        ]]>
+
+    </select>
+
+    <select id="selectByCategorySection" resultMap="postStatsMap">
+        <![CDATA[
+
+        select * from post_stats
+        where category = #{category} and `section` = #{section} and `number` < #{startNo}
+        order by `number` desc
+        limit #{count}
+
+        ]]>
+
+    </select>
+
+</mapper>

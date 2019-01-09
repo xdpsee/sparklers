@@ -1,0 +1,44 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhenhui.sparkler.data.model.mapper.CommentStatsMapper">
+
+    <resultMap id="commentStatsMap" type="CommentStats">
+        <result property="replyId" column="reply_id"/>
+        <result property="refId" column="ref_id"/>
+        <result property="count" column="count"/>
+        <result property="version" column="version"/>
+    </resultMap>
+
+    <insert id="insertOrIgnore" parameterType="CommentStats">
+        insert ignore into comment_stats (
+          `reply_id`,
+          `ref_id`,
+          `count`,
+          `version`
+        ) values (
+          #{replyId},
+          #{refId},
+          #{count},
+          #{version}
+        );
+    </insert>
+
+    <select id="selectForTest" resultMap="commentStatsMap">
+        select * from comment_stats where reply_id = #{replyId} and ref_id = #{refId} limit 1
+    </select>
+
+    <select id="selectCount" resultType="int">
+        select count(1) from comment_stats where reply_id = #{replyId} and ref_id = #{refId}
+    </select>
+
+    <select id="selectForUpdate" resultMap="commentStatsMap">
+        select * from comment_stats where reply_id = #{replyId} and ref_id = #{refId} for update
+    </select>
+
+    <update id="updateCount">
+        update comment_stats set `count` = `count` + 1, version = version + 1 where reply_id = #{replyId} and ref_id = #{refId} and version = #{version}
+    </update>
+
+</mapper>

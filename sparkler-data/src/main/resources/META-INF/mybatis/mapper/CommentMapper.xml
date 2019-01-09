@@ -1,0 +1,64 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhenhui.sparkler.data.model.mapper.CommentMapper">
+
+    <resultMap id="commentMap" type="Comment">
+        <result property="id" column="id"/>
+        <result property="replyId" column="reply_id"/>
+        <result property="refId" column="ref_id"/>
+        <result property="content" column="content"
+                typeHandler="com.zhenhui.sparkler.data.model.type.handler.MixedConverter"/>
+        <result property="creatorId" column="creator_id"/>
+        <result property="createAt" column="create_at"/>
+        <result property="number" column="number"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
+        insert into comments (
+          `reply_id`,
+          `ref_id`,
+          `content`,
+          `creator_id`,
+          `create_at`,
+          `number`,
+          `status`
+        ) values (
+          #{replyId},
+          #{refId},
+          #{content},
+          #{creatorId},
+          #{createAt},
+          #{number},
+          #{status}
+        );
+    </insert>
+
+    <select id="selectById" resultMap="commentMap">
+        select * from comments where id = #{id}
+    </select>
+
+    <select id="selectByIds" resultMap="commentMap">
+        select * from comments where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="selectBySeq" resultMap="commentMap">
+
+        select * from comments where reply_id = #{replyId} and ref_id = #{refId}
+        <choose>
+            <when test="sortAsc">
+              and number &gt; #{startNo} order by number
+            </when>
+            <otherwise>
+              and number &lt; #{startNo} order by number desc
+            </otherwise>
+        </choose>
+        limit #{count}
+
+    </select>
+</mapper>
