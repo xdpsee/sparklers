@@ -10,7 +10,7 @@
     <modules>
         <module>sparkler-api</module>
         <module>sparkler-data</module>
-        <module>sparkler-webapi</module>
+        <module>sparkler-service</module>
     </modules>
 
     <properties>

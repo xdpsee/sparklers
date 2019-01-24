@@ -1,0 +1,4 @@
+#Key and value types
+#Thu Jan 24 20:30:44 CST 2019
+keyType=java.lang.Long
+valueType=com.zhenhui.sparkler.data.model.core.post.Post

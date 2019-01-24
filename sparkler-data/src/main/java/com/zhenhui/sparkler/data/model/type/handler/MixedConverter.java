@@ -1,7 +1,7 @@
 package com.zhenhui.sparkler.data.model.type.handler;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.zhenhui.sparkler.data.model.core.common.misc.Mixed;
+import com.zhenhui.sparkler.api.domain.common.misc.Mixed;
 import com.zhenhui.sparkler.data.utils.JsonUtils;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;

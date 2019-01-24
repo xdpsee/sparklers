@@ -1,6 +1,7 @@
 package com.zhenhui.sparkler.data.model.core.post;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.zhenhui.sparkler.api.domain.common.Content;
 import com.zhenhui.sparkler.data.model.validator.ValidPost;
 import lombok.Data;
 import org.apache.ibatis.type.Alias;

@@ -1,6 +1,6 @@
 package com.zhenhui.sparkler.data.model.core.comment;
 
-import com.zhenhui.sparkler.data.model.core.common.misc.Mixed;
+import com.zhenhui.sparkler.api.domain.common.misc.Mixed;
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
 
